@@ -1,10 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFP1056G6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-1KFP1056G6');
+  </script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Privacy Policy — Mineward</title>
   <meta name="description" content="Privacy Policy for the Mineward Minecraft server and website." />
+  <link rel="canonical" href="https://mineward.net/privacy.html" />
+  <meta name="robots" content="index, follow" />
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -130,5 +142,40 @@
       </span>
     </div>
   </div>
+
+  <script>
+    // GA4 Event Tracking for Privacy Page
+    document.addEventListener('DOMContentLoaded', function() {
+      // Track navigation link clicks
+      document.querySelectorAll('a[href]').forEach(link => {
+        link.addEventListener('click', function() {
+          const href = this.getAttribute('href');
+          let eventLabel = 'internal_link';
+          
+          if (href === './') eventLabel = 'home_link';
+          else if (href.includes('terms')) eventLabel = 'terms_link';
+          
+          gtag('event', 'navigation_click', {
+            'event_category': 'engagement',
+            'event_label': eventLabel,
+            'value': 1
+          });
+        });
+      });
+
+      // Track page engagement
+      let startTime = Date.now();
+      window.addEventListener('beforeunload', function() {
+        const timeOnPage = Math.round((Date.now() - startTime) / 1000);
+        gtag('event', 'page_engagement', {
+          'event_category': 'engagement',
+          'event_label': 'privacy_page',
+          'custom_parameter_1': timeOnPage,
+          'transport_type': 'beacon'
+        });
+      });
+    });
+  </script>
+
 </body>
 </html>

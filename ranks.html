@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFP1056G6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-1KFP1056G6');
+  </script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mineward Ranks — Paladin, Warlord, Legend, Deity</title>
@@ -235,6 +245,46 @@
     <a href="https://mineward.tebex.io/category/ranks" target="_blank" rel="noopener" class="btn btn-primary" style="display:inline-flex">Open Store</a>
     <p style="margin-top:1rem">&copy; 2025 Mineward. Not affiliated with Mojang AB.</p>
   </footer>
+
+  <script>
+    // GA4 Event Tracking for Ranks Page
+    document.addEventListener('DOMContentLoaded', function() {
+      // Track store button clicks
+      document.querySelectorAll('a[href*="tebex.io"]').forEach(link => {
+        link.addEventListener('click', function() {
+          gtag('event', 'store_visit', {
+            'event_category': 'engagement',
+            'event_label': 'ranks_page_store_button',
+            'value': 1
+          });
+        });
+      });
+
+      // Track rank card interactions
+      document.querySelectorAll('.rank-card').forEach(card => {
+        card.addEventListener('click', function() {
+          const rankName = this.querySelector('h3')?.textContent || 'unknown';
+          gtag('event', 'rank_card_click', {
+            'event_category': 'engagement',
+            'event_label': rankName,
+            'value': 1
+          });
+        });
+      });
+
+      // Track page engagement
+      let startTime = Date.now();
+      window.addEventListener('beforeunload', function() {
+        const timeOnPage = Math.round((Date.now() - startTime) / 1000);
+        gtag('event', 'page_engagement', {
+          'event_category': 'engagement',
+          'event_label': 'ranks_page',
+          'custom_parameter_1': timeOnPage,
+          'transport_type': 'beacon'
+        });
+      });
+    });
+  </script>
 
 </body>
 </html>

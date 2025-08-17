@@ -1,10 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KFP1056G6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-1KFP1056G6');
+  </script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Terms of Service — Mineward</title>
   <meta name="description" content="Terms of Service for the Mineward Minecraft server and website." />
+  <link rel="canonical" href="https://mineward.net/terms.html" />
+  <meta name="robots" content="index, follow" />
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -125,5 +137,59 @@
       </span>
     </div>
   </div>
+
+  <script>
+    // GA4 Event Tracking for Terms Page
+    document.addEventListener('DOMContentLoaded', function() {
+      // Track external link clicks
+      document.querySelectorAll('a[href^="http"], a[target="_blank"]').forEach(link => {
+        link.addEventListener('click', function() {
+          const url = this.href;
+          let eventLabel = 'external_link';
+          
+          if (url.includes('discord.com')) eventLabel = 'discord_link';
+          else if (url.includes('mailto:')) eventLabel = 'email_link';
+
+          gtag('event', 'click', {
+            'event_category': 'outbound',
+            'event_label': eventLabel,
+            'transport_type': 'beacon'
+          });
+        });
+      });
+
+      // Track navigation link clicks
+      document.querySelectorAll('a[href]').forEach(link => {
+        link.addEventListener('click', function() {
+          const href = this.getAttribute('href');
+          if (!href.startsWith('http') && !href.startsWith('mailto:')) {
+            let eventLabel = 'internal_link';
+            
+            if (href === './') eventLabel = 'home_link';
+            else if (href.includes('privacy')) eventLabel = 'privacy_link';
+            
+            gtag('event', 'navigation_click', {
+              'event_category': 'engagement',
+              'event_label': eventLabel,
+              'value': 1
+            });
+          }
+        });
+      });
+
+      // Track page engagement
+      let startTime = Date.now();
+      window.addEventListener('beforeunload', function() {
+        const timeOnPage = Math.round((Date.now() - startTime) / 1000);
+        gtag('event', 'page_engagement', {
+          'event_category': 'engagement',
+          'event_label': 'terms_page',
+          'custom_parameter_1': timeOnPage,
+          'transport_type': 'beacon'
+        });
+      });
+    });
+  </script>
+
 </body>
 </html>
